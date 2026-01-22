@@ -1,0 +1,173 @@
+export type TApiQueryResponse<T> = {
+  success: boolean;
+  data: T;
+};
+
+export interface IUserSignup {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserLogin {
+  email: string;
+  password: string;
+}
+
+export type TUserProfile = {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+  bio: string;
+  skillsToTeach: string[];
+  skillsToLearn: string[];
+  profileComplete: boolean;
+  provider: "credentials" | "google";
+  isActive: boolean;
+  isEmailVerified: boolean;
+  friends: TFriend[];
+};
+
+type TFriend = {
+  _id: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+};
+
+export type TCompleteProfileData = {
+  age: number;
+  bio: string;
+  profilePicture: string | undefined;
+  skillsToLearn: string[];
+  skillsToTeach: string[];
+};
+
+export type TMessageData = {
+  conversationId: string;
+  senderId: string;
+  text: string;
+};
+
+export type TMessage = {
+  _id: string;
+  conversation: string;
+  sender: {
+    _id: string;
+    name: string;
+  };
+  text: string;
+  readBy: string[];
+  createdAt: string;
+  updatedAt: string;
+  status?: "sending" | "sent" | "failed";
+  __v: number;
+};
+
+export type TMessagesResponse = {
+  messages: TMessage[];
+};
+
+export type TPopulatedUser = {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+};
+
+export type TObjectId = string;
+
+export type TFriendRequestItem = {
+  _id: string;
+  from: TObjectId | TPopulatedUser;
+  to: TObjectId | TPopulatedUser;
+  status: "pending" | "accepted" | "rejected";
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+export type TFriendRequestListData = {
+  message: string;
+  requests: TFriendRequestItem[] | [];
+};
+
+export const skills = [
+  "Web Development",
+  "Graphic Design",
+  "Guitar",
+  "German",
+  "English",
+  "French",
+  "Spanish",
+  "Video Editing",
+  "Photography",
+  "App Development",
+  "UI/UX Design",
+  "Drawing",
+  "Singing",
+  "Dancing",
+  "Chinese",
+] as const;
+
+export type TSkill = (typeof skills)[number];
+
+export type TUpdateProfilePayload = {
+  name?: string;
+  username?: string;
+  age?: number;
+  bio?: string;
+  profilePicture?: string;
+  skillsToTeach?: TSkill[];
+  skillsToLearn?: TSkill[];
+};
+
+export type TUser = {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  profilePicture: string;
+  age: number;
+  bio: string;
+  skillsToTeach: string[];
+  skillsToLearn: string[];
+  profileComplete: boolean;
+  provider: "credentials" | "google";
+  isEmailVerified: boolean;
+  isActive: boolean;
+  friends: string[] | [];
+};
+
+export type TAllUsersData = {
+  users: TUser[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
+
+export type TConversationUser = {
+  _id: string;
+  name: string;
+  username: string;
+  profilePicture: string;
+};
+
+export type TConversation = {
+  _id: string;
+  participants: TConversationUser[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  lastMessage?: {
+    _id: string;
+    text: string;
+    createdAt: string;
+  };
+};
+
+export type TConversationsResponse = TConversation[];
